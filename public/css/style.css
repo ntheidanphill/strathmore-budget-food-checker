@@ -1,0 +1,188 @@
+/* =====================================================================
+   STRATHMORE BUDGET FOOD CHECKER - main stylesheet
+   Theme: campus navy + warm "food" colours (gold, tomato, cream).
+   Sections: 1 Variables | 2 Base | 3 Header | 4 Buttons | 5 Forms
+             6 Hero/Search | 7 Food cards | 8 Dashboard/Tables | 9 Mobile
+   ===================================================================== */
+
+/* ---------- 1. VARIABLES: change a colour once, it changes everywhere ---------- */
+:root {
+    --navy: #0b2a5b;
+    --navy-2: #143d86;
+    --gold: #f5b324;
+    --tomato: #e8503a;
+    --green: #1f9d62;
+    --cream: #fff8ec;
+    --ink: #1d2433;
+    --muted: #6b7385;
+    --white: #ffffff;
+    --radius: 16px;
+    --shadow: 0 6px 18px rgba(11, 42, 91, .12);
+    --shadow-lg: 0 14px 30px rgba(11, 42, 91, .22);
+}
+
+/* ---------- 2. BASE ---------- */
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    font-family: "Segoe UI", system-ui, Arial, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.5;
+}
+a { color: var(--navy-2); text-decoration: none; }
+h1, h2, h3 { color: var(--navy); margin: 0 0 .6rem; }
+.container { max-width: 1100px; margin: 0 auto; padding: 1.5rem 1rem 3rem; min-height: 70vh; }
+.muted { color: var(--muted); font-size: .9rem; }
+
+/* Reusable entrance animation: cards fade up one after another (--i set in Blade) */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes floaty { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-14px) rotate(8deg); } }
+@keyframes wiggle { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-14deg); } 75% { transform: rotate(14deg); } }
+
+/* ---------- 3. HEADER / NAV ---------- */
+.topbar {
+    background: linear-gradient(90deg, var(--navy), var(--navy-2));
+    color: var(--white);
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+    gap: .6rem; padding: .8rem 1.2rem;
+    position: sticky; top: 0; z-index: 10;
+    box-shadow: var(--shadow);
+}
+.brand { color: var(--white); display: flex; align-items: center; gap: .6rem; font-size: 1.05rem; }
+.brand-icon { font-size: 1.7rem; display: inline-block; }
+.brand:hover .brand-icon { animation: wiggle .6s ease; }   /* hover: the plate wiggles */
+.nav { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; }
+.nav a, .link-btn {
+    color: #dbe6ff; padding: .45rem .8rem; border-radius: 999px;
+    position: relative; transition: background .25s, color .25s, transform .2s;
+}
+.nav a:hover, .link-btn:hover { background: rgba(255, 255, 255, .15); color: var(--white); transform: translateY(-2px); }
+.nav a.active { background: var(--gold); color: var(--navy); font-weight: 600; }
+.logout-form { margin: 0; }
+.link-btn { background: none; border: 0; cursor: pointer; font: inherit; }
+
+/* ---------- 4. BUTTONS ---------- */
+.btn {
+    display: inline-block; border: 0; cursor: pointer; font: inherit; font-weight: 600;
+    padding: .65rem 1.2rem; border-radius: 999px; color: var(--white); background: var(--navy);
+    transition: transform .2s, box-shadow .2s, background .25s;
+}
+.btn:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+.btn:active { transform: scale(.97); }
+.btn-primary { background: var(--tomato); }
+.btn-primary:hover { background: #d03f2a; }
+.btn-gold { background: var(--gold); color: var(--navy); }
+.btn-green { background: var(--green); }
+.btn-ghost { background: transparent; color: var(--navy); border: 2px solid var(--navy); }
+.btn-ghost:hover { background: var(--navy); color: var(--white); }
+.btn-danger { background: #b3261e; }
+.btn-sm { padding: .3rem .8rem; font-size: .85rem; }
+
+/* ---------- 5. FORMS ---------- */
+.panel { background: var(--white); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); animation: fadeUp .5s ease both; }
+.panel.narrow { max-width: 520px; margin: 1rem auto; }
+label { display: block; font-weight: 600; margin-bottom: 1rem; color: var(--navy); }
+input[type=text], input[type=number], input[type=email], input[type=password], select {
+    width: 100%; padding: .7rem .9rem; margin-top: .3rem; font: inherit;
+    border: 2px solid #dfe5f1; border-radius: 12px; background: #fbfcff;
+    transition: border-color .2s, box-shadow .2s;
+}
+input:focus, select:focus { outline: 0; border-color: var(--gold); box-shadow: 0 0 0 4px rgba(245, 179, 36, .25); }
+label.check { display: flex; align-items: center; gap: .5rem; font-weight: 500; }
+label.check input { width: 1.1rem; height: 1.1rem; margin: 0; }
+.form-actions { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: .5rem; }
+.inline-form { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; margin-bottom: 1rem; }
+.inline-form input { margin: 0; max-width: 320px; }
+.alert { border-radius: 12px; padding: .8rem 1rem; margin-bottom: 1rem; animation: fadeUp .4s ease both; }
+.alert-success { background: #e4f7ec; border-left: 5px solid var(--green); }
+.alert-error { background: #fdeceb; border-left: 5px solid #b3261e; }
+.alert ul { margin: .3rem 0 0; padding-left: 1.2rem; }
+
+/* ---------- 6. HERO + STUDENT SEARCH ---------- */
+.hero {
+    position: relative; overflow: hidden; color: var(--white); text-align: center;
+    background: linear-gradient(135deg, var(--navy), var(--navy-2) 60%, #1b57b8);
+    border-radius: 24px; padding: 2.5rem 1.2rem 2rem; box-shadow: var(--shadow-lg);
+}
+.hero h1 { color: var(--white); font-size: clamp(1.6rem, 4vw, 2.5rem); }
+.hero p { color: #dbe6ff; max-width: 560px; margin: 0 auto 1.2rem; }
+/* floating food emojis in the background */
+.hero .float { position: absolute; font-size: 2.2rem; opacity: .25; animation: floaty 6s ease-in-out infinite; }
+.hero .f1 { left: 6%; top: 18%; } .hero .f2 { right: 8%; top: 12%; animation-delay: 1s; }
+.hero .f3 { left: 18%; bottom: 10%; animation-delay: 2s; } .hero .f4 { right: 16%; bottom: 14%; animation-delay: 3s; }
+
+.search-card { position: relative; background: var(--white); color: var(--ink); border-radius: var(--radius); padding: 1.2rem; max-width: 720px; margin: 0 auto; text-align: left; }
+.budget-row { display: flex; gap: .6rem; flex-wrap: wrap; }
+.budget-row .money { flex: 1; min-width: 180px; position: relative; }
+.budget-row .money span { position: absolute; left: .9rem; top: 1.25rem; font-weight: 700; color: var(--muted); }
+.budget-row .money input { padding-left: 3.4rem; font-size: 1.3rem; font-weight: 700; margin: 0; }
+.chips, .pills { display: flex; gap: .5rem; flex-wrap: wrap; margin: .8rem 0; }
+.chip { border: 2px dashed var(--gold); background: #fff7df; color: var(--navy); border-radius: 999px; padding: .3rem .9rem; cursor: pointer; font: inherit; font-weight: 600; transition: transform .2s, background .2s; }
+.chip:hover { background: var(--gold); transform: translateY(-3px) rotate(-2deg); }
+/* location pills = radio buttons styled as pills (pure CSS, no JS needed) */
+.pill input { position: absolute; opacity: 0; pointer-events: none; }
+.pill { margin: 0; }
+.pill span { display: inline-block; padding: .4rem 1rem; border-radius: 999px; border: 2px solid #dfe5f1; cursor: pointer; font-weight: 600; transition: all .2s; }
+.pill span:hover { border-color: var(--navy-2); transform: translateY(-2px); }
+.pill input:checked + span { background: var(--navy); color: var(--white); border-color: var(--navy); }
+.pill input:focus-visible + span { box-shadow: 0 0 0 4px rgba(245, 179, 36, .4); }
+.field-error { color: #b3261e; font-size: .9rem; margin: .3rem 0 0; }
+
+/* ---------- 7. FOOD RESULT CARDS ---------- */
+.results-head { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem; align-items: baseline; margin: 1.8rem 0 .8rem; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+.card {
+    background: var(--white); border-radius: var(--radius); padding: 1.1rem; box-shadow: var(--shadow);
+    border-top: 5px solid var(--gold); position: relative;
+    animation: fadeUp .5s ease both; animation-delay: calc(var(--i, 0) * 60ms);  /* staggered entrance */
+    transition: transform .25s, box-shadow .25s, border-color .25s;
+}
+.card:hover { transform: translateY(-8px) rotate(-.6deg); box-shadow: var(--shadow-lg); border-color: var(--tomato); }
+.card .emoji { font-size: 2.6rem; display: inline-block; transition: transform .3s; }
+.card:hover .emoji { transform: scale(1.25) rotate(-10deg); }   /* hover: food icon pops */
+.card h3 { margin: .3rem 0 .1rem; }
+.price { position: absolute; top: 1rem; right: 1rem; background: var(--tomato); color: var(--white); font-weight: 800; padding: .3rem .7rem; border-radius: 999px; transition: transform .25s; }
+.card:hover .price { transform: scale(1.12); }
+.tag { display: inline-block; background: #eaf0fd; color: var(--navy); border-radius: 999px; padding: .15rem .7rem; font-size: .82rem; font-weight: 600; margin-top: .4rem; }
+.change { color: var(--green); font-size: .85rem; font-weight: 600; margin-top: .5rem; }
+.empty { text-align: center; padding: 2.5rem 1rem; background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); }
+.empty .big { font-size: 3.5rem; }
+
+/* ---------- 8. DASHBOARDS, STATS, TABLES ---------- */
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1rem; margin: 1rem 0 1.5rem; }
+.stat { background: var(--white); border-radius: var(--radius); padding: 1.1rem; text-align: center; box-shadow: var(--shadow); animation: fadeUp .5s ease both; animation-delay: calc(var(--i, 0) * 80ms); transition: transform .25s; }
+.stat:hover { transform: translateY(-6px); }
+.stat .num { font-size: 2.2rem; font-weight: 800; color: var(--tomato); }
+.stat .lbl { color: var(--muted); font-weight: 600; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+.tile { display: block; background: var(--white); border-radius: var(--radius); padding: 1.3rem; box-shadow: var(--shadow); color: var(--ink); border-left: 6px solid var(--gold); transition: transform .25s, border-color .25s, box-shadow .25s; }
+.tile:hover { transform: translateY(-6px) scale(1.02); border-color: var(--tomato); box-shadow: var(--shadow-lg); }
+.tile .ico { font-size: 2rem; display: block; }
+.table-wrap { overflow-x: auto; background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); }
+table.data { width: 100%; border-collapse: collapse; min-width: 560px; }
+table.data th { background: var(--navy); color: var(--white); text-align: left; padding: .7rem .9rem; }
+table.data td { padding: .65rem .9rem; border-bottom: 1px solid #eef1f8; vertical-align: middle; }
+table.data tr { transition: background .2s; }
+table.data tbody tr:hover { background: #fff3d6; }
+.badge { display: inline-block; padding: .15rem .7rem; border-radius: 999px; font-size: .8rem; font-weight: 700; }
+.badge-on { background: #ddf5e8; color: #14744a; }
+.badge-off { background: #fde1df; color: #a1211a; }
+.toolbar { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+.filters { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+.filters input, .filters select { margin: 0; width: auto; }
+.actions { display: flex; gap: .4rem; flex-wrap: wrap; }
+.actions form { margin: 0; }
+.login-art { text-align: center; font-size: 3rem; }
+
+/* ---------- 9. FOOTER + MOBILE ---------- */
+.footer { background: var(--navy); color: #dbe6ff; text-align: center; padding: 1.2rem; }
+.footer p { margin: .2rem 0; }
+.footer .muted { color: #9fb3dd; }
+@media (max-width: 600px) {
+    .topbar { justify-content: center; }
+    .hero { padding: 2rem .8rem 1.4rem; border-radius: 18px; }
+    .card .price { position: static; display: inline-block; margin-top: .4rem; }
+}
+/* respect people who turn animations off in their device settings */
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
