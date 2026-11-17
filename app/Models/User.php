@@ -2,48 +2,52 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * User = a staff member who can log in (Admin or Vendor Manager).
+ * Students are guests and have NO row in this table.
+ * This file REPLACES the default app/Models/User.php.
+ */
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    // Role names are stored as constants so we never mistype a string.
+    public const ROLE_ADMIN = 'admin';
+    public const ROLE_VENDOR = 'vendor_manager';
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    // Columns allowed for mass assignment, e.g. User::create([...])
+    protected $fillable = ['name', 'username', 'email', 'password', 'role', 'vendor_id', 'is_active'];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
+    // Never include these when the model is converted to JSON/array
+    protected $hidden = ['password', 'remember_token'];
+
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password'          => 'hashed',   // Laravel auto-hashes the password on save (R5)
+            'is_active'         => 'boolean',
         ];
+    }
+
+    /** A vendor manager belongs to one vendor. */
+    public function vendor(): BelongsTo
+    {
+        return $this->belongsTo(Vendor::class);
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === self::ROLE_ADMIN;
+    }
+
+    public function isVendorManager(): bool
+    {
+        return $this->role === self::ROLE_VENDOR;
     }
 }
