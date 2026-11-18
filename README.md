@@ -1,4 +1,4 @@
-# 🍛 Strathmore Budget Food Checker (Group 8)
+# 🍛 Strathmore Budget Food Checker
 
 A Laravel web application that helps Strathmore University students find meals
 they can afford. A student types a maximum budget (KES) as a **guest** and sees every
