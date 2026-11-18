@@ -7,6 +7,12 @@
 
 {{-- ============ HERO + SEARCH FORM ============ --}}
 <section class="hero">
+    {{-- photo collage background: real campus spots (images in public/images) --}}
+    <div class="hero-collage" aria-hidden="true">
+        <div class="shot shot-sc"><span class="shot-label">📍 Student Centre</span></div>
+        <div class="shot shot-sw"><span class="shot-label">📍 Siwaka</span></div>
+    </div>
+
     {{-- decorative floating food emojis (pure CSS animation) --}}
     <span class="float f1">🍛</span><span class="float f2">🥟</span>
     <span class="float f3">🍟</span><span class="float f4">🥤</span>
